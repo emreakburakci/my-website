@@ -3,10 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .timer-container {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .input-container {
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 8px;
+            font-size: 1em;
+            width: 60px;
+            margin-right: 5px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .time-display {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>This is my simple website hosted on GitHub Pages.</p>
+    <div class="timer-container">
+        <h1>Countdown Timer</h1>
+        <div class="input-container">
+            <input type="number" id="minutes" placeholder="Min" min="0">
+            <input type="number" id="seconds" placeholder="Sec" min="0">
+        </div>
+        <button id="start-btn">Start</button>
+        <button id="pause-btn">Pause</button>
+        <button id="reset-btn">Reset</button>
+        <div class="time-display" id="time-display">00:00</div>
+    </div>
+
+    <script>
+        let timerInterval;
+        let remainingTime = 0;
+        let isPaused = false;
+
+        const timeDisplay = document.getElementById("time-display");
+        const minutesInput = document.getElementById("minutes");
+        const secondsInput = document.getElementById("seconds");
+        const startButton = document.getElementById("start-btn");
+        const pauseButton = document.getElementById("pause-btn");
+        const resetButton = document.getElementById("reset-btn");
+
+        startButton.addEventListener("click", () => {
+            const minutes = parseInt(minutesInput.value) || 0;
+            const seconds = parseInt(secondsInput.value) || 0;
+
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            if (!isPaused) {
+                remainingTime = minutes * 60 + seconds;
+            }
+
+            if (remainingTime <= 0) {
+                alert("Please enter a valid time!");
+                return;
+            }
+
+            timerInterval = setInterval(() => {
+                if (remainingTime > 0) {
+                    remainingTime--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    alert("Time's up!");
+                }
+            }, 1000);
+            isPaused = false;
+        });
+
+        pauseButton.addEventListener("click", () => {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                isPaused = true;
+            }
+        });
+
+        resetButton.addEventListener("click", () => {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            remainingTime = 0;
+            updateDisplay();
+            isPaused = false;
+        });
+
+        function updateDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            timeDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        }
+    </script>
 </body>
 </html>
