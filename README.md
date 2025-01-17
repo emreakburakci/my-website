@@ -1,3 +1,4 @@
-# my-website
+# SoftBreak - SoftUni Timer
 
-https://emreakburakci.github.io/my-website
+## Usage
+// TODO
