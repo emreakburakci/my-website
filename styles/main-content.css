@@ -21,11 +21,11 @@
 }
 
 .time-container .time:hover {
-    border-bottom: 0.15rem solid #234465;
+    border-bottom: 0.15rem solid #55a3d9;
 }
 
 .time .m:hover, .s:hover {
-    color: #ffa000;
+    color: #ee5725;
 }
 
 .time-container .info {
@@ -40,7 +40,7 @@
 }
 
 .info .timer-button {
-    color: #ffa000;
+    color: #ee5725;
 }
 
 .info .timer-on {
